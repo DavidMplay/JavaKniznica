@@ -18,13 +18,14 @@ import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 
 public class App extends Application {
+        GridPane layout = new GridPane();
 
     @Override
     public void start(Stage stage) {
-        GridPane layout = new GridPane();
         layout.setPrefSize(350, 150);
         layout.setPadding(new Insets(20, 20, 20, 20));
         layout.setVgap(10);
@@ -34,7 +35,8 @@ public class App extends Application {
         Osoba person = new Osoba("David");
         Map<Osoba, List<Knjiga>> posudeneKnjige = new HashMap();
         List<Knjiga> knjige = new ArrayList<>();
-
+        BookList bookList = new BookList(knjige);
+        
         Text bookName = new Text("Ime Knjige");
         Text bookId = new Text("ID Knjige");
         TextField nameInput = new TextField();
@@ -42,6 +44,8 @@ public class App extends Application {
         Text confirmation = new Text("");
         Button addBook = new Button("Dodaj knjigu");
         Button saveBooks = new Button("Spremi dodane knjige");
+        Button addPeople = new Button("Dodaj osobu");
+        Button bookListButton = new Button("Lista knjiga");
 
         layout.add(bookName, 0, 0);
         layout.add(bookId, 0, 2);
@@ -50,6 +54,8 @@ public class App extends Application {
         layout.add(addBook, 1, 1);
         layout.add(saveBooks, 1, 3);
         layout.add(confirmation, 0, 5);
+        layout.add(addPeople, 0, 6);
+        layout.add(bookListButton, 1, 6);
 
         addBook.setOnMouseClicked(event -> {
             Knjiga knjiga = new Knjiga(Integer.valueOf(idInput.getText()), nameInput.getText());
@@ -73,6 +79,13 @@ public class App extends Application {
                 System.out.println();
             }
         });
+
+        
+        Scene bookListScene = new Scene(bookList.getView());
+        bookListButton.setOnMouseClicked(event -> {
+            stage.setScene(bookListScene);
+        });
+
         Scene scene = new Scene(layout);
         stage.setScene(scene);
         stage.setOnCloseRequest(event -> {
