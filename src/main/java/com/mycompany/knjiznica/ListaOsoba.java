@@ -6,27 +6,24 @@ import javafx.scene.Parent;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 
-public class BookList {
+public class ListaOsoba {
 
-    private List<Knjiga> knjige;
+    private List<Osoba> osobe;
 
-    public BookList(List<Knjiga> books) {
-        this.knjige = books;
+    public ListaOsoba(List<Osoba> osobe) {
+        this.osobe = osobe;
     }
 
     public Parent getView() {
         BorderPane layout = new BorderPane();
         layout.setPrefSize(350, 150);
         layout.setPadding(new Insets(20, 20, 20, 20));
-        ListView<String> bookList = new ListView();
-        for (Knjiga knjiga : knjige) {
-            bookList.getItems().add(knjiga.toString());
+        ListView<String> peopleList = new ListView();
+        for (Osoba osoba : osobe) {
+            peopleList.getItems().add(osoba.toString());
         }
-        layout.setCenter(bookList);
+        layout.setCenter(peopleList);
 
-
-        
         return layout;
     }
-
 }

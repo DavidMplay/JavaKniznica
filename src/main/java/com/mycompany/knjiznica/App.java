@@ -17,19 +17,22 @@ public class App extends Application {
     public void start(Stage stage) {
         BorderPane layout = new BorderPane();
         layout.setPadding(new Insets(20,20,20,20));
-        layout.setPrefSize(350, 150);
+        layout.setPrefSize(400, 150);
         HBox buttons = new HBox();
         List<Knjiga> knjige = new ArrayList();
+        List<Osoba> osobe = new ArrayList();
         BookList listaKnjiga = new BookList(knjige);
         DodajKnjigu dodajKnjigu = new DodajKnjigu(knjige);
-
-        buttons.setSpacing(25);
+        DodajOsobu dodajOsobu = new DodajOsobu(osobe);
+        ListaOsoba listaOsoba = new ListaOsoba(osobe);
+        buttons.setSpacing(5);
         
         Button bookList = new Button("Lista knjiga");
         Button addBook = new Button("Dodaj Knjigu");
         Button addPerson = new Button("Dodaj Osobu");
+        Button personList = new Button("Lista Osoba");
 
-        buttons.getChildren().addAll(addBook, bookList, addPerson);
+        buttons.getChildren().addAll(addBook, bookList, addPerson, personList);
         layout.setTop(buttons);
         layout.setCenter(dodajKnjigu.getView());
 
@@ -39,12 +42,18 @@ public class App extends Application {
         addBook.setOnMouseClicked(event -> {
             layout.setCenter(dodajKnjigu.getView());
         });
+        addPerson.setOnMouseClicked(event ->{
+            layout.setCenter(dodajOsobu.getView());
+        });
+        personList.setOnMouseClicked(event ->{
+            layout.setCenter(listaOsoba.getView());
+        });
 
         Scene scene = new Scene(layout);
         stage.setScene(scene);
         stage.setOnCloseRequest(event -> {
             try {
-                PrintWriter writer = new PrintWriter("C:\\Users\\Gamer\\Documents\\NetBeansProjects\\Knjiznica\\src\\main\\java\\com\\mycompany\\knjiznica\\Knjige.txt");
+                PrintWriter writer = new PrintWriter("src\\main\\java\\com\\mycompany\\knjiznica\\Knjige.txt");
                 writer.println("");
                 writer.close();
             } catch (Exception e) {
