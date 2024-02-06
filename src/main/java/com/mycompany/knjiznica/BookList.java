@@ -26,9 +26,7 @@ public class BookList {
         }
         layout.setCenter(bookList);
 
-        back.setOnMouseClicked(event ->{
-            
-        });
+
         
         return layout;
     }
