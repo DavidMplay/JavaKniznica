@@ -3,10 +3,12 @@ package com.mycompany.knjiznica;
 
 
 public class Osoba {
+    private int id;
     private String lastName;
     private String firstName;
     
-    public Osoba(String firstName, String lastName){
+    public Osoba(int id, String firstName, String lastName){
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -17,7 +19,10 @@ public class Osoba {
     public String getLastName(){
         return lastName;
     }
+    public int getID(){
+        return id;
+    }
     public String toString(){
-        return firstName + " " + lastName;
+        return getID() + "| " + firstName + " " + lastName;
     }
 }

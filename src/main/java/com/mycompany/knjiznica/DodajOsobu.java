@@ -2,6 +2,7 @@ package com.mycompany.knjiznica;
 
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -27,6 +28,9 @@ public class DodajOsobu {
         layout.setVgap(10);
         layout.setHgap(10);
         layout.setAlignment(Pos.TOP_LEFT);
+
+        AtomicInteger id = new AtomicInteger(0);
+
         Text bookName = new Text("Ime");
         Text bookId = new Text("Prezime");
         TextField firstNameInput = new TextField();
@@ -44,14 +48,24 @@ public class DodajOsobu {
         layout.add(confirmation, 0, 5);
 
         addPerson.setOnMouseClicked(event -> {
-            Osoba osoba = new Osoba(lastNameInput.getText(), firstNameInput.getText());
-            osobe.add(osoba);
-            confirmation.setText("Osoba dodana");
-            firstNameInput.setText("");
-            lastNameInput.setText("");
-            PauseTransition delay = new PauseTransition(Duration.seconds(2));
-            delay.setOnFinished(e -> confirmation.setText(""));
-            delay.play();
+            if (firstNameInput.getText().isEmpty() && lastNameInput.getText().isEmpty()) {
+                confirmation.setText("Ime i prezime su obavezni");
+            } else if (firstNameInput.getText().isEmpty()) {
+                confirmation.setText("Ime je obavezno");
+            } else if (lastNameInput.getText().isEmpty()) {
+                confirmation.setText("Prezime je obavezno");
+            } else {
+
+                Osoba osoba = new Osoba(id.intValue(), lastNameInput.getText(), firstNameInput.getText());
+                osobe.add(osoba);
+                id.incrementAndGet();
+                confirmation.setText("Osoba dodana");
+                firstNameInput.setText("");
+                lastNameInput.setText("");
+                PauseTransition delay = new PauseTransition(Duration.seconds(2));
+                delay.setOnFinished(e -> confirmation.setText(""));
+                delay.play();
+            }
         });
 
         savePersons.setOnMouseClicked(event -> {
