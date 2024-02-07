@@ -24,7 +24,6 @@ public class ListaOsoba {
         layout.setPrefSize(475, 150);
         ListView<String> peopleList = new ListView();
         try ( BufferedReader reader = new BufferedReader(new FileReader(new File("src\\main\\java\\com\\mycompany\\knjiznica\\Osobe.txt")))) {
-
             String line;
             while ((line = reader.readLine()) != null) {
                 peopleList.getItems().add(line);

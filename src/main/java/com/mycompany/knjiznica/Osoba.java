@@ -29,6 +29,6 @@ public class Osoba {
     }
 
     public String toString() {
-        return getID() + "| " + firstName + " " + lastName;
+        return getID() + " " + firstName + " " + lastName;
     }
 }

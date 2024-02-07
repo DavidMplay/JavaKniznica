@@ -14,7 +14,7 @@ public class Knjiga {
         this.pisac = writer;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 
@@ -34,6 +34,6 @@ public class Knjiga {
     }
     
     public String toString() {
-        return getId() + "| " + getISBN() + " " + getName() + " " + getWriter();
+        return getID() + " " + getISBN() + " " + getName() + " " + getWriter();
     }
 }

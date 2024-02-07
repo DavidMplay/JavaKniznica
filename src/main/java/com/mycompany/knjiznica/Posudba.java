@@ -1,5 +1,6 @@
 package com.mycompany.knjiznica;
 
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 import javafx.geometry.Insets;
@@ -64,14 +65,53 @@ public class Posudba {
 
         borrow.setOnMouseClicked(event -> {
             try {
-                listaPosudbi.getItems().add(peopleCB.getValue().toStringLists() + " je posudio " + booksCB.getValue().toStringLists());
+                try {
+                    listaPosudbi.getItems().add(peopleCB.getValue().toStringLists() + " je posudio " + booksCB.getValue().toStringLists());
+                } catch (NullPointerException e) {
+                    confirmation.setText("Potreban je odabir");
+                }
+                posudeno.put(peopleCB.getValue(), booksCB.getValue());
+                books.remove(booksCB.getValue());
+                people.remove(peopleCB.getValue());
+                booksCB.getItems().remove(booksCB.getValue());
+                peopleCB.getItems().remove(peopleCB.getValue());
+                String bookTxtRefreshBuffer = "";
+                for (Knjiga knjiga : books) {
+                    bookTxtRefreshBuffer += knjiga + "\n";
+                }
+                try {
+                    PrintWriter writer = new PrintWriter("src\\main\\java\\com\\mycompany\\knjiznica\\Knjige.txt");
+                    writer.println(bookTxtRefreshBuffer);
+                    writer.close();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+                String personTxtRefreshBuffer = "";
+                for (Osoba osoba : people) {
+                    personTxtRefreshBuffer += osoba + "\n";
+                }
+                try {
+                    PrintWriter writer = new PrintWriter("src\\main\\java\\com\\mycompany\\knjiznica\\Osobe.txt");
+                    writer.println(personTxtRefreshBuffer);
+                    writer.close();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+                String borrowedTxtRefreshBuffer = "";
+                for (Map.Entry<Osoba, Knjiga> newPosudeno : posudeno.entrySet()) {
+                    borrowedTxtRefreshBuffer += newPosudeno.getKey().toString() + " @" + newPosudeno.getValue().toString() + "\n";
+                }
+                try {
+                    PrintWriter writer = new PrintWriter("src\\main\\java\\com\\mycompany\\knjiznica\\PosudeneKnjige.txt");
+                    writer.println(borrowedTxtRefreshBuffer);
+                    writer.close();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             } catch (NullPointerException e) {
                 confirmation.setText("Potreban je odabir");
+
             }
-            posudeno.put(peopleCB.getValue(), booksCB.getValue());
-            people.remove(peopleCB.getValue());
-            books.remove(booksCB.getValue());
-            booksCB.getItems().remove(booksCB.getValue());
         });
 
         return layout;
