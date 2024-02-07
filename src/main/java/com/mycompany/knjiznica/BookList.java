@@ -19,15 +19,13 @@ public class BookList {
     public BookList(List<Knjiga> books) {
         this.knjige = books;
     }
-//"src\\main\\java\\com\\mycompany\\knjiznica\\Knjige.txt"
 
     public Parent getView() {
         BorderPane layout = new BorderPane();
+        ListView<String> bookList = new ListView();
         layout.setPrefSize(350, 150);
         layout.setPadding(new Insets(20, 20, 20, 20));
-        ListView<String> bookList = new ListView();
         try ( BufferedReader reader = new BufferedReader(new FileReader(new File("src\\main\\java\\com\\mycompany\\knjiznica\\Knjige.txt")))) {
-
             String line;
             while ((line = reader.readLine()) != null) {
                 bookList.getItems().add(line);

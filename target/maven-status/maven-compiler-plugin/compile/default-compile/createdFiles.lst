@@ -5,4 +5,5 @@ com\mycompany\knjiznica\Knjiga.class
 com\mycompany\knjiznica\BookList.class
 com\mycompany\knjiznica\Osoba.class
 com\mycompany\knjiznica\DodajKnjigu.class
+com\mycompany\knjiznica\Posudba.class
 com\mycompany\knjiznica\ListaOsoba.class

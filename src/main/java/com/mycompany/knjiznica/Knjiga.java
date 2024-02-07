@@ -29,8 +29,11 @@ public class Knjiga {
     public int getISBN() {
         return ISBN;
     }
-
+    public String toStringLists(){
+        return getISBN() + " " + getName() + " " + getWriter();
+    }
+    
     public String toString() {
-        return getId() + "| " + getISBN() + " " + getName() + " - " + getWriter();
+        return getId() + "| " + getISBN() + " " + getName() + " " + getWriter();
     }
 }

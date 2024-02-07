@@ -20,10 +20,10 @@ public class ListaOsoba {
 
     public Parent getView() {
         BorderPane layout = new BorderPane();
-        layout.setPrefSize(350, 150);
         layout.setPadding(new Insets(20, 20, 20, 20));
+        layout.setPrefSize(475, 150);
         ListView<String> peopleList = new ListView();
-        try ( BufferedReader reader = new BufferedReader(new FileReader(new File("src\\main\\java\\com\\mycompany\\knjiznica\\Knjige.txt")))) {
+        try ( BufferedReader reader = new BufferedReader(new FileReader(new File("src\\main\\java\\com\\mycompany\\knjiznica\\Osobe.txt")))) {
 
             String line;
             while ((line = reader.readLine()) != null) {
