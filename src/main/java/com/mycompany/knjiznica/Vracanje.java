@@ -2,6 +2,7 @@ package com.mycompany.knjiznica;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -42,8 +43,12 @@ public class Vracanje {
         for (Map.Entry<Osoba, Knjiga> posudeno : posudeno.entrySet()) {
             posudeneOsobe.getItems().add(posudeno.getKey());
         }
+        try {
+            posudeneOsobe.setOnAction(event -> posudenaKnjiga.setText(posudeno.get(posudeneOsobe.getValue()).toString()));
 
-        posudeneOsobe.setOnAction(event -> posudenaKnjiga.setText(posudeno.get(posudeneOsobe.getValue()).toString()));
+        } catch (NullPointerException e) {
+
+        }
         vracanje.setOnMouseClicked(event -> {
             try {
                 String[] osobaParts = posudeneOsobe.getValue().toString().split(" ");
@@ -52,21 +57,28 @@ public class Vracanje {
                 knjige.add(tempKnjiga);
                 Osoba tempOsoba = new Osoba(Integer.parseInt(osobaParts[0]), osobaParts[1], osobaParts[2]);
                 osobe.add(tempOsoba);
-                try {
-                    Scanner s = new Scanner(new File("src\\main\\java\\com\\mycompany\\knjiznica\\PosudeneKnjige.txt"));
-
-                    while (s.hasNext()) {
-                        String[] mainParts = s.nextLine().split("@");
-                        String[] personParts = mainParts[0].split(" ");
-                        String[] bookParts = mainParts[1].split(" ");
-                        Knjiga tempknjiga = new Knjiga(Integer.parseInt(bookParts[0]), Integer.parseInt(bookParts[1]), bookParts[2], bookParts[3]);
-                        Osoba temposoba = new Osoba(Integer.parseInt(personParts[0]), personParts[1], personParts[2]);
-                        posudeno.put(temposoba, tempknjiga);
+                posudeneOsobe.getItems().remove(posudeneOsobe.getValue());
+                posudenaKnjiga.setText("");
+                Map<Osoba, Knjiga> tempPosudba = new HashMap();
+                for (Map.Entry<Osoba, Knjiga> posudeno : posudeno.entrySet()) {
+                    if (!posudeno.getKey().toString().equals(tempOsoba.toString())) {
+                        tempPosudba.put(posudeno.getKey(), posudeno.getValue());
                     }
-                    s.close();
-                } catch (Exception e) {
-                    System.out.println("error " + e);
+                    this.posudeno = tempPosudba;
                 }
+
+                String borrowedTxtRefreshBuffer = "";
+                for (Map.Entry<Osoba, Knjiga> newPosudeno : posudeno.entrySet()) {
+                    borrowedTxtRefreshBuffer += newPosudeno.getKey().toString() + " @" + newPosudeno.getValue().toString() + "\n";
+                }
+                try {
+                    PrintWriter writer = new PrintWriter("src\\main\\java\\com\\mycompany\\knjiznica\\PosudeneKnjige.txt");
+                    writer.println(borrowedTxtRefreshBuffer);
+                    writer.close();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+
                 String bookTxtRefreshBuffer = "";
                 for (Knjiga knjiga : knjige) {
                     bookTxtRefreshBuffer += knjiga + "\n";
