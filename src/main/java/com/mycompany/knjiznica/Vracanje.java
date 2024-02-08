@@ -32,23 +32,25 @@ public class Vracanje {
         layout.setPrefSize(475, 150);
         layout.setVgap(5);
         layout.setHgap(40);
-        layout.setAlignment(Pos.CENTER);
+        layout.setAlignment(Pos.CENTER_LEFT);
 
         ComboBox<Osoba> posudeneOsobe = new ComboBox();
+        posudeneOsobe.setPromptText("Izaberi Osobu");
         posudeneOsobe.setPrefSize(150, 25);
         Text posudenaKnjiga = new Text("");
         Text confirmation = new Text("");
         Button vracanje = new Button("Vrati Knjigu");
 
+        layout.add(posudeneOsobe, 0, 0);
+        layout.add(posudenaKnjiga, 1, 0);
+        layout.add(vracanje, 0, 1);
+        layout.add(confirmation, 1, 1);
+
         for (Map.Entry<Osoba, Knjiga> posudeno : posudeno.entrySet()) {
             posudeneOsobe.getItems().add(posudeno.getKey());
         }
-        try {
-            posudeneOsobe.setOnAction(event -> posudenaKnjiga.setText(posudeno.get(posudeneOsobe.getValue()).toString()));
+        posudeneOsobe.setOnAction(event -> posudenaKnjiga.setText(posudeno.get(posudeneOsobe.getValue()).toString()));
 
-        } catch (NullPointerException e) {
-
-        }
         vracanje.setOnMouseClicked(event -> {
             try {
                 String[] osobaParts = posudeneOsobe.getValue().toString().split(" ");
@@ -58,6 +60,7 @@ public class Vracanje {
                 Osoba tempOsoba = new Osoba(Integer.parseInt(osobaParts[0]), osobaParts[1], osobaParts[2]);
                 osobe.add(tempOsoba);
                 posudeneOsobe.getItems().remove(posudeneOsobe.getValue());
+                posudeneOsobe.setPromptText("Izaberi Osobu");
                 posudenaKnjiga.setText("");
                 Map<Osoba, Knjiga> tempPosudba = new HashMap();
                 for (Map.Entry<Osoba, Knjiga> posudeno : posudeno.entrySet()) {
@@ -106,11 +109,6 @@ public class Vracanje {
                 confirmation.setText("not selected");
             }
         });
-
-        layout.add(posudeneOsobe, 0, 0);
-        layout.add(posudenaKnjiga, 1, 0);
-        layout.add(vracanje, 0, 1);
-        layout.add(confirmation, 1, 1);
 
         return layout;
     }

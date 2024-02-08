@@ -72,6 +72,8 @@ public class Posudba {
                 }
                 posudeno.put(peopleCB.getValue(), booksCB.getValue());
                 books.remove(booksCB.getValue());
+                peopleCB.setPromptText("Izaberi osobu");
+                booksCB.setPromptText("Izaberi knjigu");
                 people.remove(peopleCB.getValue());
                 booksCB.getItems().remove(booksCB.getValue());
                 peopleCB.getItems().remove(peopleCB.getValue());

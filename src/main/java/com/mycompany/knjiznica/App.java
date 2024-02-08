@@ -96,8 +96,8 @@ public class App extends Application {
         buttons2.setSpacing(5);
 
         Button bookList = new Button("Lista knjiga");
-        Button addBook = new Button("Dodaj Knjigu");
-        Button addPerson = new Button("Dodaj Osobu");
+        Button addBook = new Button("Dodavanje Knjige");
+        Button addPerson = new Button("Dodavanje Osoba");
         Button personList = new Button("Lista Osoba");
         Button bookBorowing = new Button("Posudi Knjigu");
         Button bookReturning = new Button("Vrati Knjigu");

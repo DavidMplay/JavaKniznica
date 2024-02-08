@@ -31,8 +31,6 @@ public class DodajOsobu {
         layout.setHgap(40);
         layout.setAlignment(Pos.CENTER_LEFT);
 
-        AtomicInteger id = new AtomicInteger(0);
-
         Text bookName = new Text("Ime");
         Text bookId = new Text("Prezime");
         TextField firstNameInput = new TextField();
